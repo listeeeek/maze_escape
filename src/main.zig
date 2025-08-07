@@ -10,7 +10,7 @@ const map_settings = @import("map.zig");
 pub fn main() !void {
     const allocator = std.heap.page_allocator;
 
-    var settings = map_settings.getMap(allocator, "./src/small_one.stage") catch |err| {
+    var settings = map_settings.getMap(allocator, "./src/stage_two.stage") catch |err| {
         std.debug.print("{s}\n", .{@errorName(err)});
         return;
     };
