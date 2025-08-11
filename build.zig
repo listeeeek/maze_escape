@@ -35,6 +35,9 @@ pub fn build(b: *std.Build) void {
 
     exe.linkLibC();
 
+    const yazap = b.dependency("yazap", .{});
+    exe.root_module.addImport("yazap", yazap.module("yazap"));
+
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).

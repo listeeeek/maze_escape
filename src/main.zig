@@ -1,16 +1,51 @@
 const std = @import("std");
 const terminal = @import("terminal.zig");
 const plr = @import("player.zig");
+const yazap = @import("yazap");
+const version = @import("version.zig");
+const stages = @import("stages.zig");
 
+const allocator = std.heap.page_allocator;
+const App = yazap.App;
+const Arg = yazap.Arg;
 const c = @cImport({
     @cInclude("termios.h");
 });
 
 const map_settings = @import("map.zig");
 pub fn main() !void {
-    const allocator = std.heap.page_allocator;
+    var app = App.init(allocator, "myls", "My custom ls");
+    defer app.deinit();
 
-    var settings = map_settings.getMap(allocator, "./src/stage_two.stage") catch |err| {
+    var myls = app.rootCommand();
+    try myls.addArg(Arg.booleanOption("version", 'v', "Display version"));
+
+    const stages_names = try stages.Stage.allToString(allocator);
+    defer allocator.free(stages_names);
+    try myls.addArg(Arg.singleValueOptionWithValidValues("stage", 's', "Select stage", stages_names));
+
+    const matches = try app.parseProcess();
+
+    if (matches.containsArg("version")) {
+        std.debug.print(version.version, .{});
+        return;
+    }
+
+    var selected_stage = stages.Stage.Warmup;
+
+    if (matches.containsArg("stage")) {
+        const s_name = matches.getSingleValue("stage").?;
+
+        selected_stage = std.meta.stringToEnum(stages.Stage, s_name) orelse {
+            std.debug.print("Error parsing string to enum\n", .{});
+            return;
+        };
+    }
+
+    const loc = try selected_stage.location(allocator);
+    defer allocator.free(loc);
+
+    var settings = map_settings.getMap(allocator, loc) catch |err| {
         std.debug.print("{s}\n", .{@errorName(err)});
         return;
     };
