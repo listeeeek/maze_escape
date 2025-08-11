@@ -38,10 +38,17 @@ pub fn build(b: *std.Build) void {
     const yazap = b.dependency("yazap", .{});
     exe.root_module.addImport("yazap", yazap.module("yazap"));
 
+    // stages
+    const stage1 = b.addInstallFile(b.path("stages/Warmup"), "bin/Warmup");
+    const stage2 = b.addInstallFile(b.path("stages/OneWayToGo"), "bin/OneWayToGo");
+
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).
     b.installArtifact(exe);
+
+    b.getInstallStep().dependOn(&stage1.step);
+    b.getInstallStep().dependOn(&stage2.step);
 
     // This *creates* a Run step in the build graph, to be executed when another
     // step is evaluated that depends on it. The next line below will establish

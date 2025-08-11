@@ -14,6 +14,8 @@ const c = @cImport({
 
 const map_settings = @import("map.zig");
 pub fn main() !void {
+    clearTerminal();
+
     var app = App.init(allocator, "myls", "My custom ls");
     defer app.deinit();
 
@@ -107,7 +109,7 @@ pub fn main() !void {
             },
         }
 
-        std.debug.print("\x1B[2J\x1B[H", .{}); // clear terminal.  wtf?!
+        clearTerminal();
 
         for (settings.map, 0..) |stage_item, line_idx| {
             if (player.positionY == line_idx) {
@@ -129,4 +131,8 @@ pub fn main() !void {
             break;
         }
     }
+}
+
+fn clearTerminal() void {
+    std.debug.print("\x1B[2J\x1B[H", .{}); // clear terminal.  wtf?!
 }

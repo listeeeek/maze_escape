@@ -33,9 +33,11 @@ pub const Stage = enum {
     }
 
     pub fn location(self: Stage, allocator: std.mem.Allocator) ![]const u8 {
-        const base = "./src/";
-        const ext = ".stage";
+        var exe_path_buf: [std.fs.max_path_bytes]u8 = undefined;
+        const exe_path = try std.fs.selfExePath(exe_path_buf[0..]);
 
-        return try std.fmt.allocPrint(allocator, "{s}{s}{s}", .{ base, self.toString(), ext });
+        const exe_dir_path = std.fs.path.dirname(exe_path) orelse ".";
+
+        return try std.fs.path.join(allocator, &.{ exe_dir_path, self.toString() });
     }
 };
