@@ -24,6 +24,8 @@ Start with:
 
 ## Characters
 
+P → player 
+
 E → exit
 
 S → starting point
