@@ -30,7 +30,7 @@ S → starting point
 
 X → wall
 
-<space> → non-bloking way
+space → non-bloking way
 
 ## Example
 
