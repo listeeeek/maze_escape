@@ -5,7 +5,11 @@ Simple terminal maze escape game.
 
 # Installation
 
-Clone & `zig build` then `cd zig-out/bin`
+Clone.
+
+`zig build`
+
+`cd zig-out/bin`
 
 Start with:
 ```
@@ -14,21 +18,23 @@ Start with:
 
 # Stage description
 
-1st line -> stage name
-2nd+ lines -> maze
+1st line → stage name
+
+2nd+ lines → maze
 
 ## Characters
 
-E -> exit
-S -> starting point
-X -> wall
-<space> -> non-bloking way
+E → exit
+
+S → starting point
+
+X → wall
+
+<space> → non-bloking way
 
 ## Example
 
 ```
-
-
 Small One - Warmup
 XXXXXXXXXX
 XXXXXXE XX
@@ -37,8 +43,6 @@ X   X X XX
 X XXX X XX
 XSX     XX
 XXXXXXXXXX
-
-
 ```
 
 
