@@ -16,6 +16,18 @@ Start with:
 ./maze_escape -h
 ```
 
+# Keybindings
+
+<kbd>w</kbd> Up
+
+<kbd>s</kbd> Down
+
+<kbd>a</kbd> Left
+
+<kbd>d</kbd> Right
+
+<kbd>q</kbd> Quit
+
 # Stage description
 
 1st line → stage name

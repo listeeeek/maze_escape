@@ -103,10 +103,7 @@ pub fn main() !void {
                     player.move(.Right);
                 }
             },
-            else => {
-                //TODO: skasowac pozniej, tylko na czas debugowania
-                std.debug.print("Znak: {c} ({d})\n", .{ ch, ch });
-            },
+            else => {},
         }
 
         clearTerminal();
